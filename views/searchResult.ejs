@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>Tìm kiếm</title>
+
+		<link rel="stylesheet" href="/stylesheets/style.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	</head>
+	<body id="wrapper" style="margin-bottom: 0;">
+		<div id="fb-root"></div>
+		<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.3"></script>
+		<!-- header -->
+		<div id="header">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-9 header-content">
+						<h1><a href="/" style="text-decoration: none; color: black">Tin bóng đá</a></h1>
+					</div>
+					<!-- <div class="col-lg-3 header-contact">
+						<div class="icon-box-contact">
+							<span><i class="fas fa-envelope"></i> abc@gmail.com</span>
+						</div>
+						<div class="icon-box-contact">
+							<span><i class="fas fa-phone"></i> 0999999999</span>
+						</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
+		<!-- header -->
+
+		<!-- Content -->
+		<!-- Section 1 start-->
+		<div class="section" style="margin: 0">
+			<div class="container" style="background-color: #fff; margin-top: 0">
+				<!-- search bar -->
+				<div id="buffer" style="padding:30px">
+					<form class="form-inline searchbar" action="/search" method="post" accept-charset="utf-8">
+						<input type="text" class="search_input" name="keyword" placeholder="Tìm kiếm...">
+						<button type="submit" class="search_icon"><i class="fas fa-search"></i></button>
+					</form>
+				</div>
+				<!-- search bar end -->
+				<div class="category-container">
+					<div class="category-title" style="font-size: 22px; display:inline;">
+						Tìm Kiếm
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-9">
+						<h2 style="margin-top: 30px;">Kết quả tìm kiếm với từ khóa "<%=keyWord%>"</h2> 
+						<%-categoryNewsList%>
+						<!-- pagination -->
+						<!-- pagination end-->
+					</div>
+					<div class="col-sm-3">
+						<div class="right-news">
+							<div class="category-title right-news-title">
+								TIN MỚI NHẤT
+							</div>
+							<div class="right-news-list">
+								<%-newestNewsList%>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>				
+		<!-- Section 1 end-->
+
+		<!-- Footer -->
+		<div class="footer" height="300px">
+			<div class="row">
+				<div class="col-lg-4">
+					<p><b>Cơ quan chủ quản: Công ty cổ phần Pornhub</b></p>
+					
+					<p>Linh Trung, Thủ Đức, Tp.Hồ Chí Minh</p>
+
+					<p>Điện thoại: 0981.836037</p>
+
+					<p>Email: abc@gmail.com.vn</p>
+
+				</div>
+				<div class="col-lg-5">
+					<p><b>GP số: 236/CMT-8 do Bộ Thông tin và Truyền thông cấp ngày 01/01/1970.</b></p>
+					
+					<p>Người chịu trách nhiệm nội dung: Maria Ozawa</p>
+
+					<p>Liên hệ quảng cáo, truyền thông: 0972 464 570</p>
+
+					<p>Email: phongkinhdoanh@ahihi.com</p>
+
+					<p>Linh Trung, Thủ Đức, Tp.Hồ Chí Minh</p>
+				</div>
+				<div class="col-sm-3">
+					<div id="logo">
+						<h1><span style="color: #fff">Bóng</span>
+							<span style="color: #000000; background-color: #ffa31a;border-radius: 6px;padding: 0 5px;">đá</span></h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Footer end -->
+		
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+	</body>
+</html>
+

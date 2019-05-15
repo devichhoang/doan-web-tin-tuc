@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin-Dashboard</title>
+    <link rel="stylesheet" href="/stylesheets/login-admin.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <!-- CKEDITOR-->
+    <script src="/ckeditor/ckeditor.js"></script>
+</head>
+
+<body>
+    <div class="container-admin">
+        <nav id="left-nav">
+            <div id="logo">
+                Tin bóng đá
+            </div>
+            <ul id="menu">
+                <li><a id="home" href="/login/admin">Thống kê</a></li>
+                <li><a id="addnews" href="/login/admin/edit">Đăng bài</a></li>
+                <li><a href="/login/admin/media">Media</a></li>
+                <li><a href="/login/admin/category">Danh mục</a></li>
+                <li><a href="#">Chưa nghĩ ra</a></li>
+            </ul>
+            <div id="minimize" onclick="getminimize();">
+                &lt;
+            </div>
+        </nav>
+        <header id="top-nav">
+            <div id="links">
+                <a href="/login/logout">Logout</a>
+            </div>
+        </header>
+        <main id="main">
+            <div id="maximize" onclick="getmaximize()">
+                &gt;
+            </div>
+            <div class="action-container">
+
+                <div id="addNews-action" style="text-align: center; margin-top: 10px">
+                    <h1>Tạo danh mục mới</h1>
+                    <form id="login" action="/login/admin/edit" method="post">
+                        <div class="form-group">
+                            <label for="title">Tên danh mục </label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Tên danh mục" value=<%- title%>>
+                        </div>
+                        <div class="form-group">
+                            <label for="url">URL</label>
+                            <input type="text" class="form-control" id="url" name="url" placeholder="link hình ảnh -> chọn bên dưới" value=<%- url%>>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    <p id="hello"></p>
+                    <%- showImage%>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <!--Scripts-->
+    <script type="text/javascript">
+        function image(img) {
+            var src = img.src;
+            //window.open(src);
+            document.getElementById("url").value = src.split('//').split('/').pop();
+            console.log(src);
+        }
+    </script>
+    <script type="application/javascript" src="/javascripts/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Login</title>
+	<link rel="stylesheet" href="/stylesheets/login-admin.css">
+</head>
+<body>
+	<div id="container">
+		<h1 style="text-align: center; margin-top: 10px">Note: <%= error %></h1>
+		<div class="login-container">
+			<h1>Đăng nhập</h1>
+			<form action="/login/" method="post" id="form">
+				<label for="username">Username: <br>
+					<input type="text" id="username" name="username" class="form-control">
+				</label>
+				<label for="password">Password: <br>
+					<input type="password" id="password" name="password" class="form-control">
+			    </label>
+				<input type="submit" value="login" class="form-btn" id="submit">
+			</form>
+		</div>
+	</div>
+	<script src="/javascripts/script.js"></script>
+</body>
+</html>
