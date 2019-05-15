@@ -49,6 +49,14 @@
                             <input type="text" class="form-control" id="title" name="title" placeholder="Tên bài viết" value=<%- news.title%>>
                         </div>
                         <div class="form-group">
+                            <label for="description">Mô tả ngắn (Description)</label>
+                            <input type="text" class="form-control" id="description" name="description" placeholder="description" value=<%- news.description%>>
+                        </div>
+                        <div class="form-group">
+                            <label for="tag">#tag</label>
+                            <input type="text" class="form-control" id="tag" name="tags" placeholder="tag" value=<%- news.tags%>>
+                        </div>
+                        <div class="form-group">
                             <label for="ckeditor">Nội dung bài viết</label>
                             <textarea name="content" id="ckeditor" cols="30" rows="10"><%- news.content%></textarea>
                         </div>
@@ -76,7 +84,7 @@
 
                         </div>
                         <div class="form-group">
-                            <input type="checkbox" class="form-check-input" id="isCarousel" value="isCarousel" name="isCarousel">
+                            <input type="checkbox" class="form-check-input" id="isCarousel" name="isCarousel">
                             <label class="form-check-label" for="isCarousel">Chọn làm slider</label><br>
                         </div>
 

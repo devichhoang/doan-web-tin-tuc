@@ -67,7 +67,9 @@ router.get('/admin/edit', (req, res) => {
                         url: "",
                         thumb: "",
                         isCarousel: "",
-                        category: ""
+                        category: "",
+                        tag: "",
+                        description: ""
                     }
                     res.render("./admin-dashboard/edit", { news: news, showImage: showImage() });
                 }
@@ -75,41 +77,53 @@ router.get('/admin/edit', (req, res) => {
         })
 })
 
-router.post('/admin/edit', (req, res) => {
+router.post('/admin/edit', async(req, res) => {
     if (req.body.title && req.body.content && req.body.category && req.body.image && req.body.url) {
         news.findOne({ title: req.body.title })
-            .exec((err, data) => {
+            .exec(async(err, data) => {
+                console.log(typeof(req.body.isCarousel));
+                const isCarousel = (req.body.isCarousel == "on") ? true : false;
+                /*var isCarousel = false;
+                if (req.body.isCarousel === "on") {
+                    isCarousel = true;
+                }*/
+
+                console.log(req.body.category);
+                const [categ] = await Promise.all([category.findOne({ title: req.body.category })]);
+                console.log(categ);
                 if (err) {
                     console.log(err);
                 } else if (!data) {
-                    let isCarousel = (req.body.isCarousel == "on") ? true : false;
-                    category.findOne({ title: req.body.category })
-                        .exec((err, data) => {
-                            if (data) {
-                                let tin = new news({
-                                    title: req.body.title,
-                                    content: req.body.content,
-                                    url: req.body.url.split(" ").join("-"),
-                                    category: data._id,
-                                    thumb: req.body.image,
-                                    isCarouselNews: isCarousel
-                                });
-                                tin.save()
-                                    .then(tin => console.log("add successfully"))
-                            }
-                        })
-
+                    let tin = new news({
+                        title: req.body.title,
+                        content: req.body.content,
+                        url: req.body.url.split(" ").join("-"),
+                        category: categ._id,
+                        thumb: req.body.image,
+                        isCarouselNews: isCarousel,
+                        description: req.body.description,
+                        tags: req.body.tags
+                    });
+                    tin.save()
+                        .then(tin => console.log("add successfully"))
                 } else {
+
                     data.title = req.body.title;
                     data.content = req.body.content;
                     data.url = req.body.url.split(" ").join("-");
+                    data.isCarouselNews = isCarousel;
+                    data.category = categ._id;
+                    data.thumb = req.body.image;
+                    data.description = req.body.description;
+                    data.tags = req.body.tags;
+
                     data.save()
                         .then(res => console.log("update thanh cong"));
                 }
             })
 
 
-        res.redirect('../admin');
+        res.redirect('back');
     } else {
         let news = {
             title: "",
@@ -117,7 +131,9 @@ router.post('/admin/edit', (req, res) => {
             url: "",
             thumb: "",
             isCarousel: "",
-            category: ""
+            category: "",
+            description: "",
+            tags: ""
         }
         res.render("./admin-dashboard/edit", { news: news, showImage: showImage() });
     }
@@ -145,7 +161,9 @@ router.get('/admin/edit/:_id', (req, res) => {
                                     url: "\"" + data.url + "\"",
                                     thumb: "\"" + data.thumb + "\"",
                                     isCarousel: "\"" + data.isCarouselNews + "\"",
-                                    category: data.category.title
+                                    category: data.category.title,
+                                    description: "\"" + data.description + "\"",
+                                    tags: "\"" + data.tags + "\""
                                 }
                                 console.log(category);
                                 res.render('./admin-dashboard/edit', { news: news, showImage: showImage() });
@@ -157,7 +175,6 @@ router.get('/admin/edit/:_id', (req, res) => {
 
 
 })
-
 router.get('/admin/edit/delete/:_id', (req, res) => {
     User.findById(req.session.userId)
         .exec((err, user) => {
