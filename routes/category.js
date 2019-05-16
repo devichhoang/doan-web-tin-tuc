@@ -39,7 +39,7 @@ router.get('/:category/trang-:page', (req, res) => {
                 var numberOfPages = parseInt(categoryNewsList.length / numberOfNews) + 1;
                 if (start < 0) res.send('Không có trang này');
                 res.render('category', {
-                    categoryTitle: categoryNewsList[0].category.title,
+                    categoryTitle: (categoryNewsList[0]==undefined)?'':categoryNewsList[0].category.title,
                     categoryNewsList: CategoryNewsList(categoryNewsList, start, numberOfNews),
                     newestNewsList: RightNewsList(newsList, 6),
                     pagination: Pagination(numberOfPages, pageNow)
