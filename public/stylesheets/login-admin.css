@@ -9,6 +9,11 @@ body {
     padding: 0;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 #form {
     border: 1px solid gray;
     padding: 15px 25px 20px;
@@ -209,4 +214,33 @@ main {
     border: 1px solid gray;
     margin: 7px;
     border-radius: 25px;
+}
+
+input[type=checkbox] {
+    border-radius: 15px;
+    -webkit-appearance: button;
+    border: double 2px brown;
+    white-space: nowrap;
+    width: 30px;
+    height: 30px;
+}
+
+input[type=checkbox]:checked {
+    border-radius: 15px;
+    -webkit-appearance: button;
+    border: double 2px brown;
+    background-color: brown;
+    white-space: nowrap;
+    width: 30px;
+    height: 30px;
+}
+
+input[type=text] {
+    border: 2px solid green;
+}
+
+label {
+    font-size: 23px;
+    font-weight: 500;
+    margin-top: 15px;
 }

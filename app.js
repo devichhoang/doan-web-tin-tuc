@@ -17,7 +17,9 @@ var searchRouter = require('./routes/search');
 
 //connect Mongodb
 //mongoose.connect('mongodb://localhost/Login-user', { useNewUrlParser: true });
-mongoose.connect('mongodb+srv://admin:1@cluster0-nry5d.mongodb.net/web-tin?retryWrites=true', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://admin:1@cluster0-nry5d.mongodb.net/web-tin?retryWrites=true', {
+    useNewUrlParser: true
+});
 mongoose.set('useCreateIndex', true);
 var db = mongoose.connection;
 

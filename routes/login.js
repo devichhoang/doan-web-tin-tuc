@@ -5,7 +5,8 @@ var fs = require('fs');
 var User = require("../models/mongooseModels/userAuthentication");
 var news = require("../models/mongooseModels/News");
 var category = require("../models/mongooseModels/Category");
-const show = require("../models/ejsModels/showNewsAdmin");
+const showNews = require("../models/ejsModels/showNewsAdmin");
+const showCategory = require("../models/ejsModels/showCategoryAdmin");
 const upload = require("../models/ejsModels/uploadMedia");
 const showImage = require("../models/ejsModels/showImage");
 
@@ -19,7 +20,7 @@ router.post('/', (req, res, next) => {
     if (req.body.username && req.body.password) {
         User.authenticate(req.body.username, req.body.password, (err, user) => {
             if (err || !user) {
-                res.render('./admin-dashboard/login', { error: 'Muốn hack trang tao hay gì' });
+                res.render('./admin-dashboard/login', { error: 'Muốn hack trang tui hay gì' });
             } else {
                 req.session.userId = user._id;
                 return res.redirect('./admin');
@@ -38,16 +39,32 @@ router.get('/admin', (req, res, next) => {
                 if (!user) {
                     res.render('./admin-dashboard/login', { error: 'Chưa đăng nhập -> Muốn hack trang tui hay gì' });
                 } else {
-                    news.find()
-                        .exec((err, data) => {
+                    category.find()
+                        .exec(async(err, data) => {
                             if (err) {
                                 console.log(err);
                             } else if (data) {
-                                console.log(data.length);
-                                res.render("./admin-dashboard/dashboard", { listNews: show(data), total: data.length });
+                                var list;
+                                await showCategory(data).then(rs => list = rs).catch(err => console.log(err));
+                                res.render("./admin-dashboard/dashboard", { listNews: list, total: "" });
                             }
                         })
                 }
+            }
+        })
+
+})
+
+router.get('/admin/category/:_id', (req, res, next) => {
+    User.findById(req.session.userId)
+        .exec((err, user) => {
+            if (!user) {
+                res.render('./admin-dashboard/login', { error: 'Chưa đăng nhập -> Muốn hack trang tui hay gì' });
+            } else {
+                news.find()
+                    .exec((err, data) => {
+                        res.render("./admin-dashboard/dashboard", { listNews: showNews(data, req.params._id), total: 10 });
+                    })
             }
         })
 })
@@ -59,7 +76,7 @@ router.get('/admin/edit', (req, res) => {
                 return next(err);
             } else {
                 if (!user) {
-                    res.render('./admin-dashboard/login', { error: 'Chưa đăng nhập -> Muốn hack trang tao hay gì' });
+                    res.render('./admin-dashboard/login', { error: 'Chưa đăng nhập -> Muốn hack trang tui hay gì' });
                 } else {
                     let news = {
                         title: "",
@@ -81,16 +98,8 @@ router.post('/admin/edit', async(req, res) => {
     if (req.body.title && req.body.content && req.body.category && req.body.image && req.body.url) {
         news.findOne({ title: req.body.title })
             .exec(async(err, data) => {
-                console.log(typeof(req.body.isCarousel));
                 const isCarousel = (req.body.isCarousel == "on") ? true : false;
-                /*var isCarousel = false;
-                if (req.body.isCarousel === "on") {
-                    isCarousel = true;
-                }*/
-
-                console.log(req.body.category);
                 const [categ] = await Promise.all([category.findOne({ title: req.body.category })]);
-                console.log(categ);
                 if (err) {
                     console.log(err);
                 } else if (!data) {
@@ -212,7 +221,6 @@ router.get('/files', function(req, res) {
                 sorted.push(abc);
             }
         }
-        console.log(sorted);
         res.send(sorted);
     })
 })
@@ -223,7 +231,6 @@ router.post('/admin/edit/upload', upload.array('flFileUpload', 12), function(req
 
 router.post('/admin/edit/delete_file', function(req, res, next) {
         var url_del = 'public' + req.body.url_del;
-        console.log(url_del);
         if (fs.existsSync(url_del)) {
             fs.unlinkSync(url_del);
         }
@@ -257,7 +264,44 @@ router.post('/admin/media/upload', (req, res, next) => {
 })
 
 router.get('/admin/category', (req, res, next) => {
-    res.render('./admin-dashboard/addCategory', { title: "", url: "", showImage: showImage() })
+    res.render('./admin-dashboard/addCategory', { title: "", url: "", image: "", showImage: showImage() })
+})
+
+router.post('/admin/category', (req, res, next) => {
+    if (req.body.title && req.body.url && req.body.image) {
+        category.findOne({ title: req.body.title })
+            .exec((err, data) => {
+
+                if (err) {
+                    console.log(err);
+                } else if (!data) {
+                    let categ = new category({
+                        title: req.body.title,
+                        imgUrl: req.body.image,
+                        url: req.body.url.split(" ").join("-"),
+                    });
+                    categ.save()
+                        .then(tin => console.log("add successfully"))
+                } else {
+
+                    data.title = req.body.title;
+                    data.imgUrl = req.body.url;
+                    data.url = req.body.url.split(" ").join("-");
+                    data.save()
+                        .then(res => console.log("update thanh cong"));
+                }
+            })
+
+
+        res.redirect('back');
+    } else {
+        res.render("./admin-dashboard/addCategory", {
+            title: "",
+            url: "",
+            image: "",
+            showImage: showImage()
+        });
+    }
 })
 
 router.get('/logout', (req, res, next) => {

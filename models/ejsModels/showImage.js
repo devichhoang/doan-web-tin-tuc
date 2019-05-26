@@ -15,8 +15,8 @@ var showImage = () => {
         }
     }
 
-    console.log(images);
-    console.log(sorted);
+    // console.log(images);
+    //console.log(sorted);
 
     var show = "<div>";
     for (let i = 0; i < sorted.length; i++) {
