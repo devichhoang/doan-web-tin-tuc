@@ -43,16 +43,19 @@
 
                 <div id="addNews-action" style="text-align: center; margin-top: 10px">
                     <h1>Tạo danh mục mới</h1>
-                    <form id="login" action="/login/admin/edit" method="post">
+                    <form id="login" action="/login/admin/category" method="post">
                         <div class="form-group">
                             <label for="title">Tên danh mục </label>
                             <input type="text" class="form-control" id="title" name="title" placeholder="Tên danh mục" value=<%- title%>>
                         </div>
                         <div class="form-group">
                             <label for="url">URL</label>
-                            <input type="text" class="form-control" id="url" name="url" placeholder="link hình ảnh -> chọn bên dưới" value=<%- url%>>
+                            <input type="text" class="form-control" id="url" name="url" placeholder="URL" value=<%- url%>>
                         </div>
-
+                        <div class="form-group">
+                            <label for="image">Image</label>
+                            <input type="text" class="form-control" id="image" name="image" placeholder="link hinh anh => chon ben duoi" value=<%- image%>>
+                        </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                     <p id="hello"></p>
@@ -68,7 +71,7 @@
         function image(img) {
             var src = img.src;
             //window.open(src);
-            document.getElementById("url").value = src.split('//').split('/').pop();
+            document.getElementById("image").value = src;
             console.log(src);
         }
     </script>

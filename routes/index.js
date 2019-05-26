@@ -40,6 +40,11 @@ router.get('/tintuc/:url', async(req, res) => {
         News.find().populate('category'),
         News.findOne({ url: newsUrl }).populate('category')
     ]);
+    if (news) {
+        news.views = news.views + 1;
+        news.save()
+            .then(() => console.log("tang view thanh cong"));
+    }
     res.render('readPage', {
         title: news.title,
         category: news.category.title,
