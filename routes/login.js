@@ -46,7 +46,7 @@ router.get('/admin', (req, res, next) => {
                             } else if (data) {
                                 var list;
                                 await showCategory(data).then(rs => list = rs).catch(err => console.log(err));
-                                res.render("./admin-dashboard/dashboard", { listNews: list, total: "" });
+                                res.render("./admin-dashboard/dashboard", { listNews: list });
                             }
                         })
                 }
@@ -63,12 +63,13 @@ router.get('/admin/category/:_id', (req, res, next) => {
             } else {
                 news.find()
                     .exec((err, data) => {
-                        res.render("./admin-dashboard/dashboard", { listNews: showNews(data, req.params._id), total: 10 });
+                        res.render("./admin-dashboard/dashboard", { listNews: showNews(data, req.params._id) });
                     })
             }
         })
 })
 
+//trang thêm - chỉnh sửa bài viết
 router.get('/admin/edit', (req, res) => {
     User.findById(req.session.userId)
         .exec((err, user) => {
@@ -191,7 +192,7 @@ router.get('/admin/edit/delete/:_id', (req, res) => {
                 return next(err);
             } else {
                 if (!user) {
-                    res.render('./admin-dashboard/login', { error: 'Chưa đăng nhập -> Muốn hack trang tao hay gì' });
+                    res.render('./admin-dashboard/login', { error: 'Chưa đăng nhập -> Muốn hack trang tui hay gì' });
                 } else {
                     news.remove({
                         _id: req.params._id
@@ -207,7 +208,7 @@ router.get('/admin/edit/delete/:_id', (req, res) => {
         })
 })
 
-//upload image
+//upload image ckeditor
 router.get('/files', function(req, res) {
     fs.readdir('public/images', (err, images) => {
         var sorted = [];
@@ -238,6 +239,7 @@ router.post('/admin/edit/delete_file', function(req, res, next) {
     })
     //close upload image
 
+
 router.get('/admin/media', (req, res, next) => {
     User.findById(req.session.userId)
         .exec((err, user) => {
@@ -245,7 +247,7 @@ router.get('/admin/media', (req, res, next) => {
                 return next(err);
             } else {
                 if (!user) {
-                    res.render('login', { error: 'Chưa đăng nhập -> Muốn hack trang tao hay gì' });
+                    res.render('login', { error: 'Chưa đăng nhập -> Muốn hack trang tui hay gì' });
                 } else {
                     res.render("./admin-dashboard/media", { showImage: showImage() });
                 }
@@ -263,6 +265,7 @@ router.post('/admin/media/upload', (req, res, next) => {
     })
 })
 
+//Thêm Danh mục
 router.get('/admin/category', (req, res, next) => {
     res.render('./admin-dashboard/addCategory', { title: "", url: "", image: "", showImage: showImage() })
 })
@@ -304,6 +307,8 @@ router.post('/admin/category', (req, res, next) => {
     }
 })
 
+
+//Đăng xuất
 router.get('/logout', (req, res, next) => {
     if (req.session) {
         req.session.destroy((err) => {
