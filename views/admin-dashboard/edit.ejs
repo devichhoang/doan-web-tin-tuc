@@ -24,7 +24,6 @@
                 <li><a id="addnews" href="/login/admin/edit">Đăng bài</a></li>
                 <li><a href="/login/admin/media">Media</a></li>
                 <li><a href="/login/admin/category">Danh mục</a></li>
-                <li><a href="#">Quản lý danh mục</a></li>
             </ul>
             <div id="minimize" onclick="getminimize();">
                 &lt;
@@ -64,20 +63,6 @@
                             <label for="url">URL</label>
                             <input type="text" class="form-control" id="url" name="url" placeholder="URL" value=<%- news.url%>>
                         </div>
-                        <!--div class="form-group">
-                            <label for="category">Thể loại</label>
-                            <select class="form-control" id="category" name="category">
-                            <option value="Seagame">Seagame</option>
-                            <option value="Seri A">Seri A</option>
-                            <option value="Europa League">Europa League</option>
-                            <option value="La Liga">La Liga</option>
-                            <option value="Budesliga">Budesliga</option>
-                            <option value="Champion League">Champion League</option>
-                            <option value="Ligue 1">Ligue 1</option>
-                            <option value="Việt Nam">Việt Nam</option>
-                            <option value="Premier League">Premier League</option>
-                          </select>
-                        </div-->
                         <%- showCategoryOption%>
                             <div class="form-group">
                                 <label for="image">Hình ảnh đại diện</label>
