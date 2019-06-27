@@ -9,6 +9,7 @@ const showNews = require("../models/ejsModels/showNewsAdmin");
 const showCategory = require("../models/ejsModels/showCategoryAdmin");
 const upload = require("../models/ejsModels/uploadMedia");
 const showImage = require("../models/ejsModels/showImage");
+const showCategoryOption = require("../models/ejsModels/showCategoryOption");
 
 const uploadImage = upload.single("image");
 
@@ -29,6 +30,7 @@ router.post('/', (req, res, next) => {
     }
 })
 
+//Trang thống kê bài viết
 router.get('/admin', (req, res, next) => {
 
     User.findById(req.session.userId)
@@ -72,7 +74,9 @@ router.get('/admin/category/:_id', (req, res, next) => {
 //trang thêm - chỉnh sửa bài viết
 router.get('/admin/edit', (req, res) => {
     User.findById(req.session.userId)
-        .exec((err, user) => {
+        .exec(async(err, user) => {
+            const [categ] = await Promise.all([category.find()]);
+            console.log(categ);
             if (err) {
                 return next(err);
             } else {
@@ -89,7 +93,7 @@ router.get('/admin/edit', (req, res) => {
                         tag: "",
                         description: ""
                     }
-                    res.render("./admin-dashboard/edit", { news: news, showImage: showImage() });
+                    res.render("./admin-dashboard/edit", { news: news, showImage: showImage(), showCategoryOption: showCategoryOption(categ) });
                 }
             }
         })
@@ -131,22 +135,8 @@ router.post('/admin/edit', async(req, res) => {
                         .then(res => console.log("update thanh cong"));
                 }
             })
-
-
-        res.redirect('back');
-    } else {
-        let news = {
-            title: "",
-            content: "",
-            url: "",
-            thumb: "",
-            isCarousel: "",
-            category: "",
-            description: "",
-            tags: ""
-        }
-        res.render("./admin-dashboard/edit", { news: news, showImage: showImage() });
     }
+    res.redirect('back');
 
 })
 
@@ -161,7 +151,8 @@ router.get('/admin/edit/:_id', (req, res) => {
                     res.render('login', { error: 'Chưa đăng nhập -> Muốn hack trang tui hay gì' });
                 } else {
                     news.findById(req.params._id)
-                        .exec((err, data) => {
+                        .exec(async(err, data) => {
+                            const [categ] = await Promise.all([category.find()]);
                             if (err) {
                                 console.log(err);
                             } else {
@@ -175,8 +166,7 @@ router.get('/admin/edit/:_id', (req, res) => {
                                     description: "\"" + data.description + "\"",
                                     tags: "\"" + data.tags + "\""
                                 }
-                                console.log(category);
-                                res.render('./admin-dashboard/edit', { news: news, showImage: showImage() });
+                                res.render('./admin-dashboard/edit', { news: news, showImage: showImage(), showCategoryOption: showCategoryOption(categ) });
                             }
                         })
                 }
@@ -200,7 +190,7 @@ router.get('/admin/edit/delete/:_id', (req, res) => {
                         if (err) {
                             console.log(err);
                         } else {
-                            res.redirect('../../');
+                            res.redirect('back');
                         }
                     })
                 }

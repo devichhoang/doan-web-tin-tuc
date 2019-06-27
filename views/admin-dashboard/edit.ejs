@@ -64,7 +64,7 @@
                             <label for="url">URL</label>
                             <input type="text" class="form-control" id="url" name="url" placeholder="URL" value=<%- news.url%>>
                         </div>
-                        <div class="form-group">
+                        <!--div class="form-group">
                             <label for="category">Thể loại</label>
                             <select class="form-control" id="category" name="category">
                             <option value="Seagame">Seagame</option>
@@ -77,19 +77,22 @@
                             <option value="Việt Nam">Việt Nam</option>
                             <option value="Premier League">Premier League</option>
                           </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="image">Hình ảnh đại diện</label>
-                            <input type="text" class="form-control" id="image" name="image" placeholder="link hình ảnh -> chọn bên dưới" value=<%- news.thumb%>>
+                        </div-->
+                        <%- showCategoryOption%>
+                            <div class="form-group">
+                                <label for="image">Hình ảnh đại diện</label>
+                                <input type="text" class="form-control" id="image" name="image" placeholder="link hình ảnh -> chọn bên dưới" value=<%- news.thumb%>>
 
-                        </div>
-                        <div class="form-group">
-                            <input type="checkbox" class="form-check-input" id="isCarousel" name="isCarousel">
-                            <label class="form-check-label" for="isCarousel">Chọn làm slider</label><br>
-                        </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="isCarousel" name="isCarousel">
+                                <label class="form-check-label" for="isCarousel">Chọn làm slider</label><br>
+                            </div>
+                            <div id="temp" style="display: none">
+                                <%- news.isCarousel%>
+                            </div>
 
-
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                     <%- showImage%>
                 </div>
@@ -108,6 +111,10 @@
             var src = img.src;
             document.getElementById("image").value = src;
             console.log(src);
+        }
+
+        if (document.getElementById("temp").textContent.trim(" ") === "\"true\"") {
+            document.getElementById("isCarousel").checked = true;
         }
     </script>
 
