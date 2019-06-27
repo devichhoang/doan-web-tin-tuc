@@ -21,7 +21,7 @@ router.get('/tin-tuc-moi-nhat/trang-:page', (req, res) => {
             res.render('category', {
                 categoryTitle: 'tức mới nhất',
                 categoryNewsList: CategoryNewsList(newsList, start, numberOfNews),
-                newestNewsList: '',
+                newestNewsList: RightNewsList(newsList, 6),
                 pagination: Pagination(numberOfPages, pageNow)
             })
         })
@@ -37,9 +37,9 @@ router.get('/:category/trang-:page', (req, res) => {
                 var numberOfNews = 10; //Number of News in a page
                 var start = categoryNewsList.length - numberOfNews * (pageNow - 1) - 1;
                 var numberOfPages = parseInt(categoryNewsList.length / numberOfNews) + 1;
-                if (start < 0) res.send('Không có trang này');
+                // if (start < 0) res.send('Không có trang này');
                 res.render('category', {
-                    categoryTitle: (categoryNewsList[0]==undefined)?'':categoryNewsList[0].category.title,
+                    categoryTitle: (categoryNewsList[0]==undefined)?categoryLink.slice(4):categoryNewsList[0].category.title,
                     categoryNewsList: CategoryNewsList(categoryNewsList, start, numberOfNews),
                     newestNewsList: RightNewsList(newsList, 6),
                     pagination: Pagination(numberOfPages, pageNow)

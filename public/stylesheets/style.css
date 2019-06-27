@@ -12,6 +12,10 @@ a {
     color: #00B7FF;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 .container {
     max-width: 960px;
 }
@@ -28,10 +32,6 @@ a {
 }
 
 a {
-    text-decoration: none;
-}
-
-a:hover {
     text-decoration: none;
 }
 
