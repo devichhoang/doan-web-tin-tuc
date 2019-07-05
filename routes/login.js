@@ -297,6 +297,24 @@ router.post('/admin/category', (req, res, next) => {
     }
 })
 
+router.get('/admin/category/delete/:_id/:_count', (req, res, next) => {
+    console.log(req.params._count);
+    let count = req.params._count;
+    if (count === '0') {
+        category.remove({
+            _id: req.params._id
+        }, (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('deleted')
+                res.redirect('back');
+            }
+        })
+    }
+    res.redirect('back');
+})
+
 
 //Đăng xuất
 router.get('/logout', (req, res, next) => {
